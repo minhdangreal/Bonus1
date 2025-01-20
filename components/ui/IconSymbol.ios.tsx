@@ -1,32 +1,91 @@
-import { SymbolView, SymbolViewProps, SymbolWeight } from 'expo-symbols';
-import { StyleProp, ViewStyle } from 'react-native';
+import React from 'react';
+import Svg, { Circle, Path, G, Text } from 'react-native-svg';
+import { View } from 'react-native';
+
+const SocialIcons = {
+  '4g': (props: { size: number; color?: string }) => (
+    <Svg width={props.size} height={props.size} viewBox="0 0 44 44">
+    <Circle 
+      cx="22" 
+      cy="22" 
+      r="21" 
+      fill="white" 
+      stroke="#0066CC" 
+      strokeWidth="2"
+    />
+    <Text 
+      x="22"
+      y="28"
+      fontSize="15"
+      fontWeight="bold"
+      fill="#0066CC"
+      textAnchor="middle"
+      fontFamily="Arial, sans-serif"
+    >
+      4G
+    </Text>
+  </Svg>
+),
+'apple': (props: { size: number; color?: string }) => (
+  <Svg width={props.size} height={props.size} viewBox="0 0 44 44">
+    <Circle cx="22" cy="22" r="22" fill="black"/>
+    <Path
+      fill="white"
+      d="M29.37 22.25c0-2.11.95-3.7 2.87-4.87-1.08-1.54-2.71-2.39-4.86-2.56-2.04-.16-4.27 1.19-5.08 1.19-.86 0-2.84-1.13-4.39-1.13-3.24 0-6.71 2.5-6.71 7.6 0 1.5.27 3.07.83 4.66.73 2.11 3.39 7.28 6.16 7.19 1.45-.03 2.47-1.03 4.36-1.03 1.83 0 2.77 1.03 4.39 1.03 2.79-.04 5.19-4.74 5.89-6.86-3.74-1.76-3.54-5.17-3.54-5.28zm-3.25-9.43c1.57-1.86 1.42-3.56 1.38-4.16-1.38.08-2.99.94-3.9 2-1 1.14-1.6 2.54-1.47 4.13 1.5.11 2.87-.66 3.99-1.97z"
+    />
+  </Svg>
+),
+  'facebook': (props: { size: number; color?: string }) => (
+    <Svg width={props.size} height={props.size} viewBox="0 0 44 44">
+      <Circle cx="22" cy="22" r="22" fill="#1877F2"/>
+      <Path fill="white" d="M24.5 23.5h2.5l1-4h-3.5v-2c0-1.1.5-2.2 2.2-2.2h1.7V12c0 0-1.5-.3-3-.3-3.1 0-5.1 1.9-5.1 5.3V19.5h-3.4v4h3.4V32h4.2V23.5z"/>
+    </Svg>
+  ),
+  'google': (props: { size: number; color?: string }) => (
+    <Svg width={props.size} height={props.size} viewBox="0 0 44 44">
+      <G transform="translate(12, 12)">
+        <Path fill="#4285F4" d="M20 10.2c0-.7-.1-1.4-.2-2h-9.8v3.8h5.6c-.2 1.2-1 2.3-2 3v2.5h3.2c1.9-1.7 3.2-4.3 3.2-7.3z"/>
+        <Path fill="#34A853" d="M10 20c2.7 0 4.9-.9 6.5-2.4l-3.2-2.5c-.9.6-2 1-3.3 1-2.6 0-4.7-1.7-5.5-4h-3.3v2.6c1.7 3.4 5.2 5.3 8.8 5.3z"/>
+        <Path fill="#FBBC05" d="M4.5 12.1c-.2-.6-.3-1.3-.3-2.1s.1-1.5.3-2.1v-2.6h-3.3c-.7 1.3-1.1 2.9-1.1 4.7s.4 3.4 1.1 4.7l3.3-2.6z"/>
+        <Path fill="#EA4335" d="M10 3.9c1.4 0 2.7.5 3.8 1.4l2.8-2.8c-1.8-1.7-4.1-2.5-6.6-2.5-3.6 0-7.1 1.9-8.8 5.3l3.3 2.6c.8-2.3 2.9-4 5.5-4z"/>
+      </G>
+    </Svg>
+  ),
+  'chevron.left': (props: { size: number; color?: string }) => (
+    <Svg width={props.size} height={props.size} viewBox="0 0 24 24">
+      <Path fill={props.color || '#666'} d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+    </Svg>
+  ),
+  'faceid': (props: { size: number; color?: string }) => (
+  <Svg width={props.size} height={props.size} viewBox="0 0 24 24">
+    <Path 
+      fill={props.color || '#000000'} 
+      d="M7.5,3 C7.77614237,3 8,3.22385763 8,3.5 C8,3.77614237 7.77614237,4 7.5,4 L5.5,4 C4.67157288,4 4,4.67157288 4,5.5 L4,7.53112887 C4,7.80727125 3.77614237,8.03112887 3.5,8.03112887 C3.22385763,8.03112887 3,7.80727125 3,7.53112887 L3,5.5 C3,4.11928813 4.11928813,3 5.5,3 L7.5,3 Z M16.5,4 C16.2238576,4 16,3.77614237 16,3.5 C16,3.22385763 16.2238576,3 16.5,3 L18.5,3 C19.8807119,3 21,4.11928813 21,5.5 L21,7.5 C21,7.77614237 20.7761424,8 20.5,8 C20.2238576,8 20,7.77614237 20,7.5 L20,5.5 C20,4.67157288 19.3284271,4 18.5,4 L16.5,4 Z M20,16.5 C20,16.2238576 20.2238576,16 20.5,16 C20.7761424,16 21,16.2238576 21,16.5 L21,18.5 C21,19.8807119 19.8807119,21 18.5,21 L16.5,21 C16.2238576,21 16,20.7761424 16,20.5 C16,20.2238576 16.2238576,20 16.5,20 L18.5,20 C19.3284271,20 20,19.3284271 20,18.5 L20,16.5 Z M3,16.5 C3,16.2238576 3.22385763,16 3.5,16 C3.77614237,16 4,16.2238576 4,16.5 L4,18.5 C4,19.3284271 4.67157288,20 5.5,20 L7.5,20 C7.77614237,20 8,20.2238576 8,20.5 C8,20.7761424 7.77614237,21 7.5,21 L5.5,21 C4.11928813,21 3,19.8807119 3,18.5 L3,16.5 Z M8,8.5 C8,8.22385763 8.22385763,8 8.5,8 C8.77614237,8 9,8.22385763 9,8.5 L9,9.5 C9,9.77614237 8.77614237,10 8.5,10 C8.22385763,10 8,9.77614237 8,9.5 L8,8.5 Z M16,8.5 C16,8.22385763 16.2238576,8 16.5,8 C16.7761424,8 17,8.22385763 17,8.5 L17,9.5 C17,9.77614237 16.7761424,10 16.5,10 C16.2238576,10 16,9.77614237 16,9.5 L16,8.5 Z M12,8.5 C12,8.22385763 12.2238576,8 12.5,8 C12.7761424,8 13,8.22385763 13,8.5 L13,12.5 C13,13.3284271 12.3284271,14 11.5,14 C11.2238576,14 11,13.7761424 11,13.5 C11,13.2238576 11.2238576,13 11.5,13 C11.7761424,13 12,12.7761424 12,12.5 L12,8.5 Z M8.1,15.8 C7.93431458,15.5790861 7.9790861,15.2656854 8.2,15.1 C8.4209139,14.9343146 8.73431458,14.9790861 8.9,15.2 C9.81096778,16.4146237 10.8353763,17 12,17 C13.1646237,17 14.1890322,16.4146237 15.1,15.2 C15.2656854,14.9790861 15.5790861,14.9343146 15.8,15.1 C16.0209139,15.2656854 16.0656854,15.5790861 15.9,15.8 C14.8109678,17.252043 13.502043,18 12,18 C10.497957,18 9.18903222,17.252043 8.1,15.8 Z"
+    />
+  </Svg>
+),
+  'phone': (props: { size: number; color?: string }) => (
+    <Svg width={props.size} height={props.size} viewBox="0 0 24 24">
+      <Path fill={props.color || '#666666'} d="M15.05 5A5 5 0 0 1 19 8.95M15.05 1A9 9 0 0 1 23 8.94m-1 7.98v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+    </Svg>
+  ),
+};
+
+export type IconSymbolName = keyof typeof SocialIcons;
 
 export function IconSymbol({
   name,
   size = 24,
   color,
-  style,
-  weight = 'regular',
 }: {
-  name: SymbolViewProps['name'];
+  name: IconSymbolName;
   size?: number;
-  color: string;
-  style?: StyleProp<ViewStyle>;
-  weight?: SymbolWeight;
+  color?: string;
 }) {
-  return (
-    <SymbolView
-      weight={weight}
-      tintColor={color}
-      resizeMode="scaleAspectFit"
-      name={name}
-      style={[
-        {
-          width: size,
-          height: size,
-        },
-        style,
-      ]}
-    />
-  );
+  const Icon = SocialIcons[name];
+  if (!Icon) {
+    console.warn(`Icon "${name}" not found`);
+    return null;
+  }
+  return <Icon size={size} color={color} />;
 }
